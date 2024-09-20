@@ -32,6 +32,10 @@ jobs:
         run: |
           docker build -t error-log-parser .
 
+      - name: List files in the container
+        run: |
+            docker run --rm error-log-parser ls -R /app/src
+
       - name: Run Docker container
         run: |
           docker run --rm error-log-parser

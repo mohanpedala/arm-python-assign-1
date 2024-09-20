@@ -2,9 +2,10 @@ import sqlite3
 from datetime import datetime
 from collections import defaultdict
 import re
+import os
 
 SQLITE_DATABASE_PATH = 'server.db'
-LOG_FILE_PATH = 'server.log'
+LOG_FILE_PATH = os.getenv('LOG_FILE_PATH', 'server.log')
 
 
 def setup_database(database_path: str) -> None:
