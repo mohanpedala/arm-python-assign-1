@@ -6,11 +6,12 @@ import re
 SQLITE_DATABASE_PATH = 'server.db'
 LOG_FILE_PATH = 'server.log'
 
+
 def setup_database(database_path: str) -> None:
     """
     Set up the SQLite database for storing error summaries.
     Connect to the SQLite database (or create it if it doesn't exist)
-    
+
     :param database_path: Path to the SQLite database.
     :return: None
     """
@@ -29,7 +30,8 @@ def setup_database(database_path: str) -> None:
 
     conn.commit()
     conn.close()
-    
+
+
 def save_to_database(summary: dict[str, int], database_path: str) -> None:
     conn = sqlite3.connect(database_path)
     cursor = conn.cursor()
@@ -43,12 +45,10 @@ def save_to_database(summary: dict[str, int], database_path: str) -> None:
     conn.commit()
     conn.close()
 
-    
-
 
 def summarise_errors(log_file_path: str) -> dict[str, int] | dict[None, None]:
     # dictionary to store error count
-    error_summary = defaultdict(int) 
+    error_summary = defaultdict(int)
 
     # regex to capture error type
     error_pattern = re.compile(r"ERROR\s+(\w+):")
@@ -70,17 +70,13 @@ def summarise_errors(log_file_path: str) -> dict[str, int] | dict[None, None]:
         return {None: None}
 
 
-
-
 if __name__ == "__main__":
     # Set up the database
     setup_database(SQLITE_DATABASE_PATH)
-    
     error_summary = summarise_errors(LOG_FILE_PATH)
 
     if error_summary and None not in error_summary:
         print("Error summary:", error_summary)
-        
         # Save the summary to the database
         save_to_database(error_summary, SQLITE_DATABASE_PATH)
     else:
