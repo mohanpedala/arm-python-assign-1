@@ -54,7 +54,7 @@ def summarise_errors(log_file_path: str) -> dict[str, int] | dict[None, None]:
     error_pattern = re.compile(r"ERROR\s+(\w+):")
 
     try:
-        with open(log_file_path), 'r' as log_file:
+        with open(log_file_path, 'r') as log_file:
             for line in log_file:
                 match = error_pattern.search(line)
                 if match:
